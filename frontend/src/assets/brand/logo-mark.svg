@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 64" fill="none">
+  <!-- Three supply pillars representing Imdad (provision/supply) -->
+  <!-- Left pillar -->
+  <rect x="2" y="24" width="14" height="38" rx="3" fill="#C9A84C" opacity="0.8"/>
+  <!-- Center pillar (tallest, brightest) -->
+  <rect x="21" y="8" width="14" height="54" rx="3" fill="#E2C06A"/>
+  <!-- Right pillar -->
+  <rect x="40" y="32" width="14" height="30" rx="3" fill="#C9A84C" opacity="0.8"/>
+  <!-- Upward arrow head on center -->
+  <path d="M28 2L20 12H36L28 2Z" fill="#E2C06A"/>
+  <!-- Horizontal connector line -->
+  <rect x="2" y="60" width="52" height="3" rx="1.5" fill="#C9A84C" opacity="0.4"/>
+</svg>

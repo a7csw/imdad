@@ -1,0 +1,211 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────────
+
+enum Role {
+  BUYER
+  STORE_OWNER
+  ADMIN
+}
+
+enum StoreStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+  OUT_OF_STOCK
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+// ─────────────────────────────────────────────
+// User
+// ─────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  phone     String
+  city      String
+  role      Role     @default(BUYER)
+  suspended Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  store         Store?
+  orders        Order[]
+  refreshTokens RefreshToken[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+// ─────────────────────────────────────────────
+// Store
+// ─────────────────────────────────────────────
+
+model Store {
+  id          String      @id @default(cuid())
+  name        String
+  slug        String      @unique
+  description String?
+  address     String
+  city        String
+  phone       String
+  logo        String?
+  banner      String?
+  status      StoreStatus @default(PENDING)
+  ownerId     String      @unique
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  products Product[]
+  orders   Order[]
+
+  @@map("stores")
+}
+
+// ─────────────────────────────────────────────
+// Category
+// ─────────────────────────────────────────────
+
+model Category {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  nameAr String
+  nameKu String?
+  slug   String  @unique
+  icon   String?
+
+  products Product[]
+
+  @@map("categories")
+}
+
+// ─────────────────────────────────────────────
+// Brand
+// ─────────────────────────────────────────────
+
+model Brand {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  slug   String  @unique
+  logo   String?
+  origin String?
+
+  products Product[]
+
+  @@map("brands")
+}
+
+// ─────────────────────────────────────────────
+// Product
+// ─────────────────────────────────────────────
+
+model Product {
+  id               String        @id @default(cuid())
+  name             String
+  nameAr           String?
+  slug             String        @unique
+  descriptionShort String?
+  descriptionFull  String?
+  priceIQD         Int
+  discountPriceIQD Int?
+  stock            Int           @default(0)
+  images           String[]
+  flavor           String?
+  size             String?
+  servings         Int?
+  ingredients      String?
+  usage            String?
+  warnings         String?
+  origin           String?
+  authentic        Boolean       @default(false)
+  goalTags         String[]
+  featured         Boolean       @default(false)
+  status           ProductStatus @default(ACTIVE)
+  storeId          String
+  categoryId       String
+  brandId          String
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  store      Store      @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  category   Category   @relation(fields: [categoryId], references: [id])
+  brand      Brand      @relation(fields: [brandId], references: [id])
+  orderItems OrderItem[]
+
+  @@map("products")
+}
+
+// ─────────────────────────────────────────────
+// Order
+// ─────────────────────────────────────────────
+
+model Order {
+  id              String      @id @default(cuid())
+  status          OrderStatus @default(PENDING)
+  totalIQD        Int
+  notes           String?
+  deliveryAddress String
+  deliveryCity    String
+  deliveryPhone   String
+  buyerId         String
+  storeId         String
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  buyer User       @relation(fields: [buyerId], references: [id])
+  store Store      @relation(fields: [storeId], references: [id])
+  items OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String @id @default(cuid())
+  quantity  Int
+  priceIQD  Int
+  orderId   String
+  productId String
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}

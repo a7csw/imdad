@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="6" fill="#0F0F1A"/>
+  <!-- Mini pillar mark -->
+  <rect x="4" y="15" width="6" height="14" rx="1.5" fill="#C9A84C" opacity="0.75"/>
+  <rect x="13" y="8" width="6" height="21" rx="1.5" fill="#E2C06A"/>
+  <rect x="22" y="19" width="6" height="10" rx="1.5" fill="#C9A84C" opacity="0.75"/>
+  <path d="M16 5L12 10H20L16 5Z" fill="#E2C06A"/>
+</svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 72" fill="none">
+  <!-- Icon mark: supply pillar / upward arrow shape -->
+  <g>
+    <!-- Left pillar -->
+    <rect x="8" y="24" width="10" height="40" rx="2" fill="#C9A84C"/>
+    <!-- Center pillar (tallest) -->
+    <rect x="24" y="10" width="12" height="54" rx="2" fill="#E2C06A"/>
+    <!-- Right pillar -->
+    <rect x="42" y="32" width="10" height="32" rx="2" fill="#C9A84C"/>
+    <!-- Arrow up on center pillar -->
+    <path d="M30 6L24 14h12L30 6Z" fill="#E2C06A"/>
+  </g>
+
+  <!-- Wordmark: IMDAD -->
+  <text x="68" y="48" font-family="'Cairo', 'Arial', sans-serif" font-weight="800" font-size="32" fill="#F0EFE8" letter-spacing="-0.5">IMDAD</text>
+
+  <!-- Arabic subtitle -->
+  <text x="68" y="64" font-family="'Cairo', 'Arial', sans-serif" font-weight="500" font-size="13" fill="#C9A84C" letter-spacing="0.5">إمداد</text>
+
+  <!-- Tagline dot separator -->
+  <circle cx="60" cy="56" r="2" fill="#C9A84C" opacity="0.6"/>
+</svg>
