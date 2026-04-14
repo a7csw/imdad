@@ -13,8 +13,11 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio",
-    "prisma:seed": "ts-node prisma/seed.ts",
+    "prisma:seed": "ts-node --transpile-only src/prisma/seed.ts",
     "loadtest": "node scripts/loadtest.mjs"
+  },
+  "prisma": {
+    "seed": "node dist/prisma/seed.js"
   },
   "keywords": [],
   "author": "",
