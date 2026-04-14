@@ -59,6 +59,8 @@ model User {
   orders        Order[]
   refreshTokens RefreshToken[]
 
+  @@index([role])
+  @@index([suspended])
   @@map("users")
 }
 
@@ -71,6 +73,8 @@ model RefreshToken {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([userId])
+  @@index([expiresAt])
   @@map("refresh_tokens")
 }
 
@@ -97,6 +101,9 @@ model Store {
   products Product[]
   orders   Order[]
 
+  @@index([status])
+  @@index([city])
+  @@index([status, createdAt])
   @@map("stores")
 }
 
@@ -170,6 +177,15 @@ model Product {
   brand      Brand      @relation(fields: [brandId], references: [id])
   orderItems OrderItem[]
 
+  @@index([storeId])
+  @@index([categoryId])
+  @@index([brandId])
+  @@index([status])
+  @@index([featured])
+  @@index([priceIQD])
+  @@index([status, featured, createdAt])
+  @@index([status, categoryId, createdAt])
+  @@index([status, storeId, createdAt])
   @@map("products")
 }
 
@@ -194,6 +210,12 @@ model Order {
   store Store      @relation(fields: [storeId], references: [id])
   items OrderItem[]
 
+  @@index([buyerId])
+  @@index([storeId])
+  @@index([status])
+  @@index([createdAt])
+  @@index([buyerId, createdAt])
+  @@index([storeId, status, createdAt])
   @@map("orders")
 }
 
@@ -207,5 +229,7 @@ model OrderItem {
   order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   product Product @relation(fields: [productId], references: [id])
 
+  @@index([orderId])
+  @@index([productId])
   @@map("order_items")
 }
