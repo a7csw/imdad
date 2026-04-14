@@ -7,8 +7,7 @@ import path from 'path';
 import http from 'http';
 import { env } from './config/env';
 import { errorHandler, notFound } from './middleware/errorHandler';
-import { cache } from './middleware/cache';
-import { publicLimiter, authLimiter, writeLimiter } from './middleware/rateLimit';
+import { authLimiter, writeLimiter } from './middleware/rateLimit';
 import { prisma } from './prisma/client';
 
 import authRoutes from './modules/auth/auth.routes';
@@ -80,10 +79,10 @@ app.use('/api/auth', authLimiter, authRoutes);
 
 // Public read-heavy routes get a short-TTL cache + public limiter.
 // The cache middleware auto-bypasses for authenticated requests.
-app.use('/api/categories', publicLimiter, cache(300), categoryRoutes); // 5 min
-app.use('/api/brands', publicLimiter, cache(300), brandRoutes); // 5 min
-app.use('/api/products', publicLimiter, cache(30), productRoutes); // 30 s
-app.use('/api/stores', publicLimiter, cache(60), storeRoutes); // 1 min
+app.use('/api/categories', categoryRoutes); // cache removed for diagnostics
+app.use('/api/brands', brandRoutes);       // cache removed for diagnostics
+app.use('/api/products', productRoutes);   // cache removed for diagnostics
+app.use('/api/stores', storeRoutes);       // cache removed for diagnostics
 
 // Write-dominant routes get the write limiter.
 app.use('/api/users', writeLimiter, userRoutes);
