@@ -104,8 +104,8 @@ server.headersTimeout = 66_000;
 // Only listen if this file is the process entry point. When cluster.ts forks
 // workers it requires this module — listening is deferred until here.
 if (require.main === module || process.env.WORKER === '1') {
-  server.listen(env.PORT, () => {
-    console.log(`\n🚀 Imdad API running on http://localhost:${env.PORT}`);
+  server.listen(env.PORT, '0.0.0.0', () => {
+    console.log(`\n🚀 Imdad API running on http://0.0.0.0:${env.PORT}`);
     console.log(`   Environment: ${env.NODE_ENV}  PID: ${process.pid}\n`);
   });
 }
