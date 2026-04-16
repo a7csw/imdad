@@ -10,7 +10,8 @@ import { useAuthStore } from '@/store/auth.store';
 import { useCartStore } from '@/store/cart.store';
 import { useThemeStore, applyLanguage } from '@/store/theme.store';
 import { useClickOutside } from '@/hooks/useClickOutside';
-import logoSrc from '@/assets/brand/logo-primary.svg';
+import logoDarkSrc from '@/assets/brand/logo-primary.svg';
+import logoLightSrc from '@/assets/brand/logo-light.svg';
 import Button from '../ui/Button';
 import CartDrawer from '@/features/cart/CartDrawer';
 import { fadeUp, staggerContainer } from '@/lib/motion';
@@ -119,7 +120,7 @@ export default function Header() {
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <Link to="/" className="flex-shrink-0">
-              <img src={logoSrc} alt="Imdad" className="h-9" />
+              <img src={isLight ? logoLightSrc : logoDarkSrc} alt="Imdad" className="h-9" />
             </Link>
 
             {/* Desktop Nav */}
@@ -343,7 +344,7 @@ export default function Header() {
             {/* Close button row */}
             <div className="flex items-center justify-between h-16 px-4 border-b border-default">
               <Link to="/" onClick={() => setMobileOpen(false)}>
-                <img src={logoSrc} alt="Imdad" className="h-9" />
+                <img src={isLight ? logoLightSrc : logoDarkSrc} alt="Imdad" className="h-9" />
               </Link>
               <button
                 onClick={() => setMobileOpen(false)}
