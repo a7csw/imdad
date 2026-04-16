@@ -10,6 +10,7 @@ import { useAuthStore } from '@/store/auth.store';
 import { useCartStore } from '@/store/cart.store';
 import { useThemeStore, applyLanguage } from '@/store/theme.store';
 import { useClickOutside } from '@/hooks/useClickOutside';
+import { useLangTransitionStore } from '@/lib/langTransition';
 import logoDarkSrc from '@/assets/brand/logo-primary.svg';
 import logoLightSrc from '@/assets/brand/logo-light.svg';
 import Button from '../ui/Button';
@@ -28,6 +29,7 @@ export default function Header() {
   const { user, isAuthenticated, clearAuth } = useAuthStore();
   const { totalItems } = useCartStore();
   const { theme, language, setTheme, setLanguage } = useThemeStore();
+  const { trigger: triggerLangTransition } = useLangTransitionStore();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -73,10 +75,13 @@ export default function Header() {
   }
 
   function changeLanguage(code: 'ar' | 'en' | 'ku') {
-    setLanguage(code);
-    i18n.changeLanguage(code);
-    applyLanguage(code);
+    if (code === language) { setLangMenuOpen(false); return; }
     setLangMenuOpen(false);
+    triggerLangTransition(language, code, () => {
+      setLanguage(code);
+      i18n.changeLanguage(code);
+      applyLanguage(code);
+    });
   }
 
   const currentLang = LANGUAGES.find((l) => l.code === language) ?? LANGUAGES[0];

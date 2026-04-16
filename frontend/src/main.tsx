@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';
 import { applyTheme, applyLanguage } from './store/theme.store';
+import LanguageTransitionOverlay from './components/layout/LanguageTransitionOverlay';
 import './lib/i18n';
 import './styles/globals.css';
 
@@ -36,6 +37,9 @@ mq.addEventListener('change', () => {
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <>
+      <RouterProvider router={router} />
+      <LanguageTransitionOverlay />
+    </>
   </StrictMode>
 );
