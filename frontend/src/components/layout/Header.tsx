@@ -191,8 +191,19 @@ export default function Header() {
                   }`}
                 >
                   <Globe className="w-4 h-4 flex-shrink-0" />
-                  <span className="text-xs font-semibold uppercase tracking-wide">
-                    {currentLang.short}
+                  <span className="text-xs font-semibold uppercase tracking-wide inline-block overflow-hidden">
+                    <AnimatePresence mode="wait" initial={false}>
+                      <motion.span
+                        key={i18n.language}
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 8 }}
+                        transition={{ duration: 0.18, ease: 'easeOut' }}
+                        className="inline-block"
+                      >
+                        {currentLang.short}
+                      </motion.span>
+                    </AnimatePresence>
                   </span>
                   <ChevronDown
                     className={`w-3 h-3 transition-transform duration-200 ${langMenuOpen ? 'rotate-180' : ''}`}
